@@ -1,5 +1,9 @@
-export interface IColumn {
-  title: string;
-  name: string;
-  type: 'string' | 'date' | 'number';
+// id =>
+export interface FieldMap {
+  [keys: string]: {
+    title: string;
+    type: 'string' | 'number' | 'date' | 'boolean';
+    editType: 'input' | 'area' | 'range' | 'checkbox' | 'radio' | 'date' | 'datetime';
+    radioValues?: string[];
+  };
 }

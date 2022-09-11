@@ -2,6 +2,6 @@
   import NetflixData from './Sample/NetflixData.svelte';
 </script>
 
-<div class="p-10">
+<div class="w-screen h-screen">
   <NetflixData />
 </div>
