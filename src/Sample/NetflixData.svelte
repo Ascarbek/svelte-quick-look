@@ -3,6 +3,7 @@
   import type { FieldMap } from '../Components/TableTypes';
   import { onMount } from 'svelte';
   import { getCall } from '../helpers/BackendCalls';
+  import axios from "axios";
 
   const columns: string[] = [
     'show_id',
@@ -73,8 +74,8 @@
   let data: any[] = [];
 
   onMount(async () => {
-    const resp = await getCall('/netflix-data');
-    data = resp.filter((item, index) => index < 20);
+    const resp = await axios('/sample.json');
+    data = resp.data.filter((item, index) => index < 20);
   });
 </script>
 

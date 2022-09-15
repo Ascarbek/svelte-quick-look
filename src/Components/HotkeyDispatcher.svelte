@@ -1,4 +1,4 @@
-<script lang='ts'>
+<script lang="ts">
   import { createEventDispatcher } from 'svelte';
   import type { EventMap } from './HotkeyHelpers';
 
@@ -6,7 +6,6 @@
 
   let isOpen = false;
   let isEditMode = false;
-  export let isPrimaryGrid = true;
 
   let onArrowDown = false;
   let onArrowUp = false;
@@ -28,8 +27,8 @@
         onCtrlEnter = e.code === 'Enter' && e.ctrlKey && !e.shiftKey;
         onEscape = e.code === 'Escape';
       } else {
-        if (e.code === 'Space' || e.code === 'Enter' || e.code === 'ArrowDown' || e.code === 'ArrowUp') e.preventDefault();
-
+        if (e.code === 'Space' || e.code === 'Enter' || e.code === 'ArrowDown' || e.code === 'ArrowUp')
+          e.preventDefault();
         onArrowDown = e.code === 'ArrowDown';
         onArrowUp = e.code === 'ArrowUp';
         onSpace = e.code === 'Space';
@@ -42,6 +41,7 @@
         onS = e.code === 'KeyS' && !e.ctrlKey;
       }
     } else {
+      if (e.code === 'Space' || e.code === 'Enter' || e.code === 'ArrowDown' || e.code === 'ArrowUp') e.preventDefault();
       onArrowDown = e.code === 'ArrowDown';
       onArrowUp = e.code === 'ArrowUp';
       onSpace = e.code === 'Space';
@@ -70,13 +70,9 @@
     onCtrlM = false;
   };
 
-  $: if (onArrowDown) {
-    dispatch('NextRow');
-  }
+  $: onArrowDown && dispatch('NextRow');
 
-  $: if (onArrowUp) {
-    dispatch('PrevRow');
-  }
+  $: onArrowUp && dispatch('PrevRow');
 
   const SpaceHandler = () => {
     isOpen = !isOpen;
@@ -87,9 +83,7 @@
     }
   };
 
-  $: if (onSpace) {
-    SpaceHandler();
-  }
+  $: onSpace && SpaceHandler();
 
   const EscapeHandler = () => {
     if (isEditMode) {
@@ -102,9 +96,7 @@
     }
   };
 
-  $: if (onEscape) {
-    EscapeHandler();
-  }
+  $: onEscape && EscapeHandler();
 
   const EnterHandler = () => {
     if (isOpen && !isEditMode) {
@@ -113,9 +105,7 @@
     }
   };
 
-  $: if (onEnter) {
-    EnterHandler();
-  }
+  $: onEnter && EnterHandler();
 
   const CtrlEnterHandler = () => {
     dispatch('Save');
@@ -123,17 +113,13 @@
     isEditMode = false;
   };
 
-  $: if (onCtrlEnter) {
-    CtrlEnterHandler();
-  }
+  $: onCtrlEnter && CtrlEnterHandler();
 
   const ShiftEnterHandler = () => {
     dispatch('OpenDetailPage');
   };
 
-  $: if (onShiftEnter) {
-    ShiftEnterHandler();
-  }
+  $: onShiftEnter && ShiftEnterHandler();
 
   const NHandler = () => {
     isOpen = true;
@@ -141,30 +127,17 @@
     dispatch('NewItem');
   };
 
-  $: if (onN) {
-    NHandler();
-  }
+  $: onN && NHandler();
 
-  $: if (onP) {
-    dispatch('Print');
-  }
+  $: onP && dispatch('Print');
 
-  $: if (onF) {
-    dispatch('Follow');
-  }
+  $: onF && dispatch('Follow');
 
-  $: if (onS) {
-    dispatch('ChangeStatus');
-  }
+  $: onS && dispatch('ChangeStatus');
 
-  $: if (onCtrlK) {
-    dispatch('SearchById');
-  }
+  $: onCtrlK && dispatch('SearchById');
 
-  $: if (onCtrlM) {
-    dispatch('SearchByMenu');
-  }
-
+  $: onCtrlM && dispatch('SearchByMenu');
 </script>
 
-<svelte:window on:keydown={onKeyDown} on:keyup={onKeyUp} />
+<svelte:window on:keydown="{onKeyDown}" on:keyup="{onKeyUp}" />
