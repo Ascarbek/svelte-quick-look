@@ -1,24 +1,11 @@
 <script lang="ts">
-  import HotkeyDispatcher from './HotkeyDispatcher.svelte';
-  import type { FieldMap } from './TableTypes';
+  import type { FieldMap } from './DataTypes';
 
   export let columns: string[] = [];
-  export let data: any[] = [];
+  export let rows: any[] = [];
   export let fields: FieldMap = {};
 
   export let selectedRow = 0;
-
-  const OnNextRow = () => {
-    selectedRow++;
-  };
-
-  const OnPrevRow = () => {
-    selectedRow--;
-  };
-
-  const OnOpen = () => {};
-
-  const OnClose = () => {};
 </script>
 
 <div class="flex flex-col max-h-full overflow-y-auto">
@@ -46,10 +33,14 @@
         </tr>
       </thead>
       <tbody>
-        {#each data as row, index}
+        {#each rows as row, index}
           <tr>
             {#each columns as col}
-              <td class="px-2 py-1 border border-neutral-300 whitespace-nowrap" class:selected="{selectedRow === index}">
+              <td
+                class="px-2 py-1 border border-neutral-300 whitespace-nowrap"
+                class:selected="{selectedRow === index}"
+                on:click="{() => (selectedRow = index)}"
+              >
                 {row[col]}
               </td>
             {/each}
@@ -59,8 +50,6 @@
     </table>
   </div>
 </div>
-
-<HotkeyDispatcher on:NextRow="{OnNextRow}" on:PrevRow="{OnPrevRow}" on:Open="{OnOpen}" on:Close="{OnClose}" />
 
 <style>
   .selected {

@@ -1,11 +1,11 @@
 <script lang="ts">
   import DataTable from '../Components/DataTable.svelte';
-  import type { FieldMap } from '../Components/TableTypes';
   import { onMount } from 'svelte';
-  import { getCall } from '../helpers/BackendCalls';
-  import axios from "axios";
+  import axios from 'axios';
+  import FormView from '../Components/FormView.svelte';
+  import HotkeyDispatcher from '../Components/HotkeyDispatcher.svelte';
 
-  const columns: string[] = [
+  const columns = [
     'show_id',
     'type',
     'title',
@@ -18,7 +18,7 @@
     'listed_in',
   ];
 
-  const fields: FieldMap = {
+  const fields = {
     show_id: {
       title: 'ID',
       type: 'string',
@@ -71,12 +71,102 @@
     },
   };
 
-  let data: any[] = [];
+  const fieldOrder = [
+    'show_id',
+    'type',
+    'title',
+    'director',
+    'country',
+    'date_added',
+    'release_year',
+    'rating',
+    'duration',
+    'listed_in',
+  ];
+
+  let rows: any[] = [];
 
   onMount(async () => {
     const resp = await axios('/sample.json');
-    data = resp.data.filter((item, index) => index < 20);
+    rows = resp.data.filter((item, index) => index < 20);
   });
+
+  let selectedRow = 0;
+  let showForm = false;
+  let editMode = false;
+  let modifiedData: any;
+
+  const OnNextRow = () => {
+    if (selectedRow < rows.length - 1) selectedRow++;
+  };
+
+  const OnPrevRow = () => {
+    if (selectedRow > 0) selectedRow--;
+  };
+
+  const OnOpen = () => {
+    showForm = true;
+  };
+
+  const OnClose = () => {
+    showForm = false;
+  };
+
+  const OnEditMode = () => {
+    editMode = true;
+  };
+
+  const OnViewMode = () => {
+    editMode = false;
+  };
+
+  const OnSave = () => {
+    rows = rows.map((item, index) =>
+      index === selectedRow
+        ? {
+            ...modifiedData,
+          }
+        : { ...item }
+    );
+    editMode = false;
+  };
+
+  const OnDiscard = () => {
+    editMode = false;
+  };
+
+  const trigger = {
+    OnNextRow: OnNextRow,
+    OnPrevRow: OnPrevRow,
+    OnOpen: OnOpen,
+    OnClose: OnClose,
+    OnEditMode: OnEditMode,
+    OnViewMode: OnViewMode,
+    OnSave: OnSave,
+    OnDiscard: OnDiscard,
+  };
 </script>
 
-<DataTable columns="{columns}" data="{data}" fields="{fields}" />
+<DataTable bind:selectedRow columns="{columns}" rows="{rows}" fields="{fields}" />
+
+{#if showForm}
+  <FormView
+    editMode="{editMode}"
+    data="{rows[selectedRow]}"
+    bind:modifiedData
+    fields="{fields}"
+    fieldOrder="{fieldOrder}"
+    hotkeyTrigger="{trigger}"
+  />
+{/if}
+
+<HotkeyDispatcher
+  on:NextRow="{OnNextRow}"
+  on:PrevRow="{OnPrevRow}"
+  on:Open="{OnOpen}"
+  on:Close="{OnClose}"
+  on:EditMode="{OnEditMode}"
+  on:ViewMode="{OnViewMode}"
+  on:Save="{OnSave}"
+  on:Discard="{OnDiscard}"
+/>

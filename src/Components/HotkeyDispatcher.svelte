@@ -1,6 +1,6 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
-  import type { EventMap } from './HotkeyHelpers';
+  import type { EventMap } from './EventMap';
 
   const dispatch = createEventDispatcher<EventMap>();
 

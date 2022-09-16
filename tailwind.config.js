@@ -7,6 +7,8 @@ module.exports = {
       neutral: { ...colors.stone },
       main: { ...colors.cyan },
       accent: { ...colors.rose },
+      white: colors.white,
+      black: colors.black,
     },
     extend: {},
   },

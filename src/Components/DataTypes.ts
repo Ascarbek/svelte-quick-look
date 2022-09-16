@@ -1,4 +1,3 @@
-// id =>
 export interface FieldMap {
   [keys: string]: {
     title: string;
