@@ -1,11 +1,11 @@
 <script lang="ts">
   import type { FieldMap } from './DataTypes';
   import { bounce } from './CustomAnimations';
+  import { triggerHotkey } from './HotkeyTrigger';
 
   export let data: any = {};
   export let fields: FieldMap = {};
   export let fieldOrder: string[] = [];
-  export let hotkeyTrigger: any = {};
   export let editMode: boolean = false;
 
   export let modifiedData: any = {};
@@ -23,7 +23,7 @@
   <div class="rounded-xl" transition:bounce>
     <div class="px-8 font-bold py-4 bg-neutral-200 rounded-tl-xl rounded-tr-xl flex items-center justify-between">
       <span class="mr-8 text-neutral-600 text-xl">Details</span>
-      <button on:click="{() => hotkeyTrigger.OnClose()}"><i class="fa-solid fa-xmark"></i></button>
+      <button on:click="{() => $triggerHotkey.onClose()}"><i class="fa-solid fa-xmark"></i></button>
     </div>
 
     <div class="px-8 py-8 grid grid-cols-3 gap-8 bg-white">
@@ -45,14 +45,14 @@
 
     <div class="px-8 py-4 bg-neutral-200 rounded-bl-xl rounded-br-xl">
       <div class="flex items-center w-24 h-8 justify-between relative">
-        <button class="discard" class:hide="{!editMode}" on:click="{() => hotkeyTrigger.OnDiscard()}">
+        <button class="discard" class:hide="{!editMode}" on:click="{() => $triggerHotkey.onDiscard()}">
           <i class="fa-solid fa-rotate-left"></i>
         </button>
 
         <button
           class="lock"
           class:move="{editMode}"
-          on:click="{() => (editMode ? hotkeyTrigger.OnSave() : hotkeyTrigger.OnEditMode())}"
+          on:click="{() => (editMode ? $triggerHotkey.onSave() : $triggerHotkey.onEditMode())}"
         >
           {#if editMode}
             <i class="fa-solid fa-lock-open"></i>

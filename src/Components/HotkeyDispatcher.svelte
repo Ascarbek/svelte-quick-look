@@ -1,6 +1,7 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
   import type { EventMap } from './EventMap';
+  import { triggerHotkey } from './HotkeyTrigger';
 
   const dispatch = createEventDispatcher<EventMap>();
 
@@ -138,6 +139,53 @@
   $: onCtrlK && dispatch('SearchById');
 
   $: onCtrlM && dispatch('SearchByMenu');
+
+  $triggerHotkey = {
+    onNextRow: () => {
+      dispatch('NextRow');
+    },
+    onPrevRow: () => {
+      dispatch('PrevRow');
+    },
+    onNewItem: () => {
+      isOpen = true;
+      isEditMode = true;
+      dispatch('NewItem');
+    },
+    onOpen: () => {
+      isOpen = true;
+      dispatch('Open');
+    },
+    onClose: () => {
+      isOpen = false;
+      dispatch('Close');
+    },
+    onEditMode: () => {
+      isEditMode = true;
+      dispatch('EditMode');
+    },
+    onViewMode: () => {
+      isEditMode = false;
+      dispatch('ViewMode');
+    },
+    onSave: () => {
+      isEditMode = false;
+      dispatch('Save');
+    },
+    onDiscard: () => {
+      isEditMode = false;
+      dispatch('Discard');
+    },
+    onPrint: () => {
+      dispatch('Print');
+    },
+    onChangeStatus: () => {
+      dispatch('ChangeStatus');
+    },
+    onFollow: () => {
+      dispatch('Follow');
+    },
+  };
 </script>
 
 <svelte:window on:keydown="{onKeyDown}" on:keyup="{onKeyUp}" />

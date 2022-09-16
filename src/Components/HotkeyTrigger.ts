@@ -8,7 +8,6 @@ export const triggerHotkey = writable<{
   onClose: () => void;
   onEditMode: () => void;
   onViewMode: () => void;
-  OpenDetailPage: () => void;
 
   onSave: () => void;
   onDiscard: () => void;
@@ -24,7 +23,6 @@ export const triggerHotkey = writable<{
   onClose: () => null,
   onEditMode: () => null,
   onViewMode: () => null,
-  OpenDetailPage: () => null,
 
   onSave: () => null,
   onDiscard: () => null,

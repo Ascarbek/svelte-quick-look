@@ -134,17 +134,6 @@
   const OnDiscard = () => {
     editMode = false;
   };
-
-  const trigger = {
-    OnNextRow: OnNextRow,
-    OnPrevRow: OnPrevRow,
-    OnOpen: OnOpen,
-    OnClose: OnClose,
-    OnEditMode: OnEditMode,
-    OnViewMode: OnViewMode,
-    OnSave: OnSave,
-    OnDiscard: OnDiscard,
-  };
 </script>
 
 <DataTable bind:selectedRow columns="{columns}" rows="{rows}" fields="{fields}" />
@@ -156,7 +145,6 @@
     bind:modifiedData
     fields="{fields}"
     fieldOrder="{fieldOrder}"
-    hotkeyTrigger="{trigger}"
   />
 {/if}
 
