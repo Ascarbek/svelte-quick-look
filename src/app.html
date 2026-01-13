@@ -11,8 +11,9 @@
     <link rel='stylesheet' href='/fa/css/all.min.css'>
 
     <title>Quick Look Table</title>
+    %sveltekit.head%
   </head>
-  <body>
-    <script type="module" src="/src/main.ts"></script>
+  <body data-sveltekit-preload-data="hover">
+  <div style="display: contents">%sveltekit.body%</div>
   </body>
 </html>
