@@ -1,9 +1,6 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
-  import type { EventMap } from './EventMap';
+  import type {KeyboardEventHandler} from 'svelte/elements'
   import { triggerHotkey } from './HotkeyTrigger';
-
-  const dispatch = createEventDispatcher<EventMap>();
 
   let isOpen = false;
   let isEditMode = false;
@@ -22,7 +19,7 @@
   let onCtrlK = false;
   let onCtrlM = false;
 
-  const onKeyDown = (e: KeyboardEvent) => {
+  const onKeyDown:KeyboardEventHandler<Window> = (e: KeyboardEvent) => {
     if (isOpen) {
       if (isEditMode) {
         onCtrlEnter = e.code === 'Enter' && e.ctrlKey && !e.shiftKey;
@@ -188,4 +185,4 @@
   };
 </script>
 
-<svelte:window on:keydown="{onKeyDown}" on:keyup="{onKeyUp}" />
+<svelte:window onkeydown="{onKeyDown}" onkeyup="{onKeyUp}" />

@@ -1,7 +1,7 @@
 <script lang="ts">
-  import type { FieldMap } from './DataTypes';
-  import { bounce } from './CustomAnimations';
-  import { triggerHotkey } from './HotkeyTrigger';
+  import type { FieldMap } from '../../../Components/DataTypes';
+  import { bounce } from '$shared/CustomAnimations';
+  import { triggerHotkey } from '$features/hotkey-dispatcher/HotkeyTrigger';
 
   export let data: any = {};
   export let fields: FieldMap = {};
