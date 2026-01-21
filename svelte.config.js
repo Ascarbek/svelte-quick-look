@@ -10,15 +10,6 @@ const config = {
   ],
 
   kit: {
-    files: {
-      appTemplate: 'src/app/entrypoint/app.html',
-      errorTemplate: 'src/app/entrypoint/error.html',
-      routes: 'src/app/routes',
-      hooks: {
-        server: 'src/app/entrypoint/hooks.server',
-      },
-    },
-
     adapter: adapter({
       fallback: 'index.html',
     }),
