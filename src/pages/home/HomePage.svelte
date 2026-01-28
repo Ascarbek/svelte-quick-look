@@ -1,20 +1,21 @@
 <script lang="ts">
-  import { columns } from '$pages/home/model/columns';
-  import type { TRow } from '$pages/home/model/row';
+  import { columns } from '$pages/home/columns';
+  import type { TRow } from '$pages/home/row';
   import type { TSort } from '$widgets/table/Table';
   import Table from '$widgets/table/Table.svelte';
   import { onMount } from 'svelte';
   import FormView from './FormView.svelte';
 
-  let rows =$state<TRow[]>( []);
+  let rows = $state<TRow[]>([]);
 
   onMount(async () => {
     const resp = await fetch('/sample.json', {
       headers: {
-        'Content-type':'application/json'
-      }
+        'Content-type': 'application/json',
+      },
     });
-    rows = await resp.json()
+    rows = await resp.json();
+    rows = rows.filter((_, index) => index < 10);
     // rows = resp.data.filter((item, index) => index < 20);
   });
 
@@ -56,8 +57,8 @@
     rows = rows.map((item, index) =>
       index === selectedRow
         ? {
-          ...modifiedData,
-        }
+            ...modifiedData,
+          }
         : { ...item }
     );
     editMode = false;
@@ -68,13 +69,16 @@
   };
 </script>
 
-<Table
-  {rows}
-  {columns}
-  bind:sort
-  thClass="bg-neutral-600 text-neutral-200 py-2"
-  tdClass="px-2 py-1 border border-neutral-300 whitespace-nowrap"
-></Table>
+<div class="bg-blue-100 p-8">
+  <Table
+    {rows}
+    {columns}
+    bind:sort
+    tableClass="shadow-xl"
+    thClass="bg-teal-100 text-teal-700 px-4 h-[40px]  border-b-2 border-blue-100 text-xs tracking-wider"
+    tdClass="px-2 py-1 border-b-2 border-blue-100 bg-white whitespace-nowrap"
+  ></Table>
+</div>
 
 <!--<DataTable bind:selectedRow columns="{columns}" rows="{rows}" fields="{fields}" />-->
 

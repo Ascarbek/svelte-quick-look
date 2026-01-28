@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { FieldMap } from '../../../Components/DataTypes';
+  import type { FieldMap } from '../../Components/DataTypes';
 
   export let columns: string[] = [];
   export let rows: any[] = [];

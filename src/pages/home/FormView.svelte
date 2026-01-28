@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { FieldMap } from '../../../Components/DataTypes';
+  import type { FieldMap } from '../../Components/DataTypes';
   import { bounce } from '$shared/CustomAnimations';
   import { triggerHotkey } from '$features/hotkey-dispatcher/HotkeyTrigger';
 
@@ -71,7 +71,7 @@
   }
 
   button {
-    @apply bg-neutral-300 text-main-700 rounded-lg w-10 h-10;
+    @apply bg-neutral-300 text-neutral-700 rounded-lg w-10 h-10;
   }
 
   label {
