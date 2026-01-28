@@ -16,5 +16,6 @@
   "trailingComma": "es5",
   "useTabs": false,
   "vueIndentScriptAndStyle": false,
-  "svelteStrictMode": true
+  "svelteStrictMode": true,
+  "plugins": ["prettier-plugin-svelte", "prettier-plugin-tailwindcss"]
 }

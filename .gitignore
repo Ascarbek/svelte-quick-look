@@ -1,7 +1,29 @@
-/node_modules/
-/dist/
-/.vscode/
+# OS
 .DS_Store
+.bash_history
+
+# dependencies
+node_modules
+
+# build
+/build
+/.svelte-kit
+/package
+
+# IDE
 .idea
+.zed
+.vscode
+
+# env
+.env
+.env.*
+!.env.example
+
+# debug
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+tsconfig.tsbuildinfo
+
+# misc
 /temp
-/src/datasource.ts

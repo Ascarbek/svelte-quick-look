@@ -1,8 +1,27 @@
-const sveltePreprocess = require('svelte-preprocess');
-module.exports = {
+import adapter from '@sveltejs/adapter-static';
+import { sveltePreprocess } from 'svelte-preprocess';
+
+/** @type {import('@sveltejs/kit').Config} */
+const config = {
   preprocess: [
     sveltePreprocess({
       postcss: true,
     }),
   ],
+
+  kit: {
+    adapter: adapter({
+      fallback: 'index.html',
+    }),
+
+    alias: {
+      '$pages/*': 'src/pages/*',
+      '$widgets/*': 'src/widgets/*',
+      '$features/*': 'src/features/*',
+      '$entities/*': 'src/entities/*',
+      '$shared/*': 'src/shared/*',
+    },
+  },
 };
+
+export default config;
