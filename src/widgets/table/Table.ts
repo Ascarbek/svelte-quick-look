@@ -1,12 +1,22 @@
 import type { Component } from 'svelte';
 
+export type TSortConfig =
+  | {
+      sortable: true;
+      sort: 'asc' | 'desc' | null;
+      onClick: () => void;
+    }
+  | {
+      sortable: false;
+    };
+
 export type TColumn<T extends object> = {
-  key: keyof T | null;
+  key?: keyof T;
   title?: string;
   searchable?: boolean;
   dontSort?: boolean;
-  headerComp?: Component<Record<string, never>>;
-  dataComp?: Component<Record<'row', T>>;
+  headerComp?: Component<{ title: string; sort: TSortConfig }>;
+  dataComp?: Component<{ row: T }>;
 };
 
 export type TSort<C = string> = {

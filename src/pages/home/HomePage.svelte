@@ -1,6 +1,8 @@
 <script lang="ts">
+  import HotkeyDispatcher from '$features/hotkey-dispatcher/HotkeyDispatcher.svelte';
   import { columns } from '$pages/home/columns';
   import type { TRow } from '$pages/home/row';
+  import TealTable from '$widgets/styled-table/SlateTable.svelte';
   import type { TSort } from '$widgets/table/Table';
   import Table from '$widgets/table/Table.svelte';
   import { onMount } from 'svelte';
@@ -15,14 +17,14 @@
       },
     });
     rows = await resp.json();
-    rows = rows.filter((_, index) => index < 10);
-    // rows = resp.data.filter((item, index) => index < 20);
+    // rows = rows.filter((_, index) => index < 10);
+    rows = rows.filter((_, index) => index < 20);
   });
 
-  let selectedRow = 0;
-  let showForm = false;
-  let editMode = false;
-  let modifiedData: any;
+  let selectedRow = $state(0);
+  let showForm = $state(false);
+  let editMode = $state(false);
+  let modifiedData = $state<TRow | null>(null);
 
   let sort = $state<TSort<keyof TRow>>({
     key: 'title',
@@ -55,12 +57,13 @@
 
   const OnSave = () => {
     rows = rows.map((item, index) =>
-      index === selectedRow
+      index === selectedRow && modifiedData
         ? {
             ...modifiedData,
           }
         : { ...item }
     );
+
     editMode = false;
   };
 
@@ -69,38 +72,29 @@
   };
 </script>
 
-<div class="bg-blue-100 p-8">
-  <Table
-    {rows}
-    {columns}
-    bind:sort
-    tableClass="shadow-xl"
-    thClass="bg-teal-100 text-teal-700 px-4 h-[40px]  border-b-2 border-blue-100 text-xs tracking-wider"
-    tdClass="px-2 py-1 border-b-2 border-blue-100 bg-white whitespace-nowrap"
-  ></Table>
+<div class="flex flex-col gap-8 bg-white p-8">
+  <div class="rounded-lg border border-neutral-300 bg-slate-100 shadow">
+    <TealTable {rows} {columns} bind:sort bind:selectedRow></TealTable>
+    <!-- pagination -->
+    <div class="flex items-center gap-2 p-2">
+      <div class="">
+        <input placeholder="search" class="rounded-lg border border-neutral-300 bg-white px-2 py-1 text-xs" />
+      </div>
+    </div>
+  </div>
 </div>
 
-<!--<DataTable bind:selectedRow columns="{columns}" rows="{rows}" fields="{fields}" />-->
+{#if showForm}
+  <FormView {editMode} data={rows[selectedRow]} bind:modifiedData />
+{/if}
 
-<!--{#if showForm}
-  <FormView
-    editMode="{editMode}"
-    data="{rows[selectedRow]}"
-    bind:modifiedData
-    fields="{fields}"
-    fieldOrder="{fieldOrder}"
-  />
-{/if}-->
-
-<!--
 <HotkeyDispatcher
-  on:NextRow="{OnNextRow}"
-  on:PrevRow="{OnPrevRow}"
-  on:Open="{OnOpen}"
-  on:Close="{OnClose}"
-  on:EditMode="{OnEditMode}"
-  on:ViewMode="{OnViewMode}"
-  on:Save="{OnSave}"
-  on:Discard="{OnDiscard}"
+  NextRow={OnNextRow}
+  PrevRow={OnPrevRow}
+  Open={OnOpen}
+  Close={OnClose}
+  EditMode={OnEditMode}
+  ViewMode={OnViewMode}
+  Save={OnSave}
+  Discard={OnDiscard}
 />
--->

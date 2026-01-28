@@ -16,18 +16,18 @@ export const triggerHotkey = writable<{
   onChangeStatus: () => void;
   onFollow: () => void;
 }>({
-  onNextRow: () => null,
-  onPrevRow: () => null,
-  onNewItem: () => null,
-  onOpen: () => null,
-  onClose: () => null,
-  onEditMode: () => null,
-  onViewMode: () => null,
+  onNextRow: () => {},
+  onPrevRow: () => {},
+  onNewItem: () => {},
+  onOpen: () => {},
+  onClose: () => {},
+  onEditMode: () => {},
+  onViewMode: () => {},
 
-  onSave: () => null,
-  onDiscard: () => null,
+  onSave: () => {},
+  onDiscard: () => {},
 
-  onPrint: () => null,
-  onChangeStatus: () => null,
-  onFollow: () => null,
+  onPrint: () => {},
+  onChangeStatus: () => {},
+  onFollow: () => {},
 });
